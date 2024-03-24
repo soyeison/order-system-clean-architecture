@@ -10,6 +10,7 @@ const newCustomer = new CreateCustomerImpl()
         contactInfo: {
             email: 'email@example.com',
             phoneNumber: '3026493452'
+            age: 21
         }
     }
 
@@ -21,7 +22,8 @@ const newCustomer = new CreateCustomerImpl()
         shippingAddress: 'Cra 56',
         contactInfo: {
             email: 'email2@example.com',
-            phoneNumber: '3026493454'
+            phoneNumber: '3026493454',
+            age: 21
         }
     }
 
@@ -44,7 +46,8 @@ const newCustomer = new CreateCustomerImpl()
         shippingAddress: 'Cra 48',
         contactInfo: {
             email: 'email@example.com',
-            phoneNumber: '3026493452'
+            phoneNumber: '3026493452',
+            age: 21
         }
     }
 
@@ -69,7 +72,8 @@ const newCustomer = new CreateCustomerImpl()
         shippingAddress: 'Cra 48',
         contactInfo: {
             email: 'email@example.com',
-            phoneNumber: '3026493452'
+            phoneNumber: '3026493452',
+            age: 21
         }
     }
 
@@ -81,7 +85,8 @@ const newCustomer = new CreateCustomerImpl()
         shippingAddress: 'Cra 56',
         contactInfo: {
             email: 'email2@example.com',
-            phoneNumber: '3026493454'
+            phoneNumber: '3026493454',
+            age: 21
         }
     }
 
@@ -112,7 +117,8 @@ const newCustomer = new CreateCustomerImpl()
         shippingAddress: 'Cra 48',
         contactInfo: {
             email: 'email@example.com',
-            phoneNumber: '3026493452'
+            phoneNumber: '3026493452',
+            age: 21
         }
     }
 

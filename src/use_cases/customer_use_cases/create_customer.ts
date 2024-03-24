@@ -6,6 +6,9 @@ import { CreateCustomerInput, CreateCustomerOutput, CreateCustomerUseCase } from
 
 export class CreateCustomerImpl implements CreateCustomerUseCase {
     async execute(input: CreateCustomerInput): Promise<CreateCustomerOutput> {
+        if (!this.isCustomerOver18(input.contactInfo.dateOfBirth)) {
+            throw new Error('El cliente debe tener al menos 18 años para registrarse');
+        }
         const customer = await this.createCustomer(input)
 
         // Guardar este customer en memoria
@@ -19,7 +22,18 @@ export class CreateCustomerImpl implements CreateCustomerUseCase {
     private async createCustomer(input: CreateCustomerInput): Promise<Customer> {
         try {
             const id = this.generateUUID()
-            const newCustomer = new Customer(id, input.name, input.shippingAddress, {email: input.contactInfo.email, phoneNumber: input.contactInfo.phoneNumber}, 'Cash', [])
+            const newCustomer = new Customer(
+                id, 
+                input.name, 
+                input.shippingAddress, 
+                {
+                    email: input.contactInfo.email, 
+                    phoneNumber: input.contactInfo.phoneNumber, 
+                    dateOfBirth: input.contactInfo.dateOfBirth
+                }, 
+                'Cash', 
+                []
+            )
             return newCustomer
         } catch (error) {
             console.log(error)
@@ -29,5 +43,18 @@ export class CreateCustomerImpl implements CreateCustomerUseCase {
 
     private generateUUID() {
         return uuidv4();
+    }
+
+    private isCustomerOver18(dateOfBirth: Date) {
+        const now = new Date()
+        const birthDate = new Date(dateOfBirth)
+        const age = now.getFullYear() - birthDate.getFullYear()
+        const monthDiff = now.getMonth() - birthDate.getMonth()
+
+        if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < birthDate.getDate())) {
+            return age - 1 >= 18;
+        }
+
+        return age >= 18;
     }
 }

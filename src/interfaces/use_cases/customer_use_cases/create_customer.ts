@@ -7,6 +7,7 @@ export interface CreateCustomerInput {
     contactInfo: {
         email: string;
         phoneNumber: string;
+        dateOfBirth: Date
     };
 }
 

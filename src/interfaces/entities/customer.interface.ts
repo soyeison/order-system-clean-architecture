@@ -3,6 +3,7 @@ import { Order } from "../../entities/Order"
 export interface ContactInformationInterface {
     email: string
     phoneNumber: string
+    dateOfBirth: Date
 }
 
 export interface CustomerInterface {

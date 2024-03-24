@@ -1,10 +1,11 @@
 import { Customer } from "../../entities/Customer"
-import { CustomerDB, customerDBInstance } from "../../infrastructure/database/db_storage"
+import { CustomerDB, customerDBInstance } from "../../infrastructure/database/storage/customer_db"
 
 export interface CustomerRepositoryInterface {
     addCustomer(customer: Customer): Promise<void>
     getCustomers(): Promise<Customer[]>
     getOneCustomer(id: string): Promise<Customer | undefined>
+    updateCustomer(id: string, customer: Customer): Promise<Customer>
 }
 
 export class CustomerRepository implements CustomerRepositoryInterface {
@@ -25,7 +26,6 @@ export class CustomerRepository implements CustomerRepositoryInterface {
     async updateCustomer(id: string, customer: Customer) {
         return await this.customerRepo.updateCustomer(id, customer)
     }
-
 }
 
 

@@ -1,10 +1,5 @@
-import { Customer } from "../../entities/Customer";
-
-export interface CustomerDBInterface {
-    addCustomer(customer: Customer): Promise<void>
-    getCustomers(): Promise<Customer[]>
-    getOneCustomer(id: string): Promise<Customer | undefined>
-}
+import { Customer } from "../../../entities/Customer"
+import { CustomerDBInterface } from "../interfaces/customer_db.interface"
 
 export class CustomerDB implements CustomerDBInterface {
     private customers: Customer[]

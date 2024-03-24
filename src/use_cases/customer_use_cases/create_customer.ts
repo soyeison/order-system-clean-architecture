@@ -1,8 +1,7 @@
-import {v4 as uuidv4} from 'uuid';
-
 import { Customer } from "../../entities/Customer";
 import { customerRepository } from "../../repositories/customer/customer_repository";
 import { CreateCustomerInput, CreateCustomerOutput, CreateCustomerUseCase } from '../../interfaces/use_cases/customer_use_cases/create_customer';
+import { UUIDGenerator } from '../../infrastructure/utils/uuid_generator';
 
 export class CreateCustomerImpl implements CreateCustomerUseCase {
     async execute(input: CreateCustomerInput): Promise<CreateCustomerOutput> {
@@ -21,7 +20,7 @@ export class CreateCustomerImpl implements CreateCustomerUseCase {
 
     private async createCustomer(input: CreateCustomerInput): Promise<Customer> {
         try {
-            const id = this.generateUUID()
+            const id = UUIDGenerator.generateUUID()
             const newCustomer = new Customer(
                 id, 
                 input.name, 
@@ -39,10 +38,6 @@ export class CreateCustomerImpl implements CreateCustomerUseCase {
             console.log(error)
             throw new Error('No se pudo crear el customer')
         }
-    }
-
-    private generateUUID() {
-        return uuidv4();
     }
 
     private isCustomerOver18(dateOfBirth: Date) {

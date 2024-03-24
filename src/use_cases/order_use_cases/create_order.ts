@@ -38,7 +38,7 @@ export class CreateOrderImpl implements CreateOrderUseCase {
 }
 
 // Flujo para la creacion de una orden
-(async () => {
+/* (async () => {
     const newCustomer = new Customer('', 'Yeison', 'Cra 48', {email: 'example@email.com', phoneNumber: '3023457812'}, 'Cash', [])
     
     const newProduct = new Product('', 'Camiseta', 'Camiseta chevere', 12, 5)
@@ -47,7 +47,7 @@ export class CreateOrderImpl implements CreateOrderUseCase {
     
     // Ejecutar la creacion de la nueva orden
     console.log("Nueva orden: ", await useCaseOrder.execute({products: [newProduct], customer: newCustomer}))
-})()
+})() */
 
 
 

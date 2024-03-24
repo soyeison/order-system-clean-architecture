@@ -48,7 +48,7 @@ export class CreateCustomerImpl implements CreateCustomerUseCase {
 }
 
 // Modo de uso
-(async () => {
+/* (async () => {
     const newCustomer = new CreateCustomerImpl()
     
     const information: CreateCustomerInput = {
@@ -76,4 +76,4 @@ export class CreateCustomerImpl implements CreateCustomerUseCase {
     await newCustomer.execute(information2)
     
     console.log("Consultar el customer creado", await customerRepository.getCustomers())
-})()
+})() */

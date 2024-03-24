@@ -4,7 +4,7 @@ import { CustomerDB, customerDBInstance } from "../../infrastructure/database/db
 export interface CustomerRepositoryInterface {
     addCustomer(customer: Customer): Promise<void>
     getCustomers(): Promise<Customer[]>
-    getOneCustomer(id: string): Promise<Customer>
+    getOneCustomer(id: string): Promise<Customer | undefined>
 }
 
 export class CustomerRepository implements CustomerRepositoryInterface {
@@ -18,8 +18,12 @@ export class CustomerRepository implements CustomerRepositoryInterface {
         return await this.customerRepo.getCustomers()
     }
 
-    async getOneCustomer(id: string): Promise<Customer> {
+    async getOneCustomer(id: string): Promise<Customer | undefined> {
         return await this.customerRepo.getOneCustomer(id)
+    }
+
+    async updateCustomer(id: string, customer: Customer) {
+        return await this.customerRepo.updateCustomer(id, customer)
     }
 
 }

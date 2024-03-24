@@ -3,7 +3,7 @@ import { Customer } from "../../entities/Customer";
 export interface CustomerDBInterface {
     addCustomer(customer: Customer): Promise<void>
     getCustomers(): Promise<Customer[]>
-    getOneCustomer(id: string): Promise<Customer>
+    getOneCustomer(id: string): Promise<Customer | undefined>
 }
 
 export class CustomerDB implements CustomerDBInterface {
@@ -32,14 +32,24 @@ export class CustomerDB implements CustomerDBInterface {
         }
     }
 
-    async getOneCustomer(id: string): Promise<Customer> {
+    async getOneCustomer(id: string): Promise<Customer | undefined> {
         try {
-            const customer = this.customers.find((customer) => customer.id === id)
-    
-            if (!customer) {
-                throw new Error('')
+            return this.customers.find((customer) => customer.id === id)
+        } catch (error) {
+            console.log(error)
+            throw new Error('')
+        }
+    }
+
+    async updateCustomer(id: string, updatedCustomer: Customer): Promise<Customer> {
+        try {
+            const index = this.customers.findIndex((customer) => customer.id === id)
+            if (index !== -1) {
+                this.customers[index] = updatedCustomer
+                return updatedCustomer
+            } else {
+                throw new Error('Cliente no encontrado')
             }
-            return customer
         } catch (error) {
             console.log(error)
             throw new Error('')

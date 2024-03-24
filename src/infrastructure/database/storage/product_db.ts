@@ -54,5 +54,3 @@ export class ProductDB implements ProductDBInterface {
     }
     
 }
-
-export const productDBInstance = new ProductDB()

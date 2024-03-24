@@ -1,5 +1,5 @@
 import { Customer } from "../../entities/Customer"
-import { CustomerDB, customerDBInstance } from "../../infrastructure/database/storage/customer_db"
+import { CustomerDB } from "../../infrastructure/database/storage/customer_db"
 
 export interface CustomerRepositoryInterface {
     addCustomer(customer: Customer): Promise<void>
@@ -27,6 +27,3 @@ export class CustomerRepository implements CustomerRepositoryInterface {
         return await this.customerRepo.updateCustomer(id, customer)
     }
 }
-
-
-export const customerRepository = new CustomerRepository(customerDBInstance);

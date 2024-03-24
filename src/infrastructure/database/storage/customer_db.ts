@@ -51,5 +51,3 @@ export class CustomerDB implements CustomerDBInterface {
         }
     }
 }
-
-export const customerDBInstance = new CustomerDB()

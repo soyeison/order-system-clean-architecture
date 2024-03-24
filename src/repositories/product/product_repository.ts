@@ -1,5 +1,5 @@
 import { Product } from "../../entities/Product"
-import { ProductDB, productDBInstance } from "../../infrastructure/database/storage/product_db"
+import { ProductDB } from "../../infrastructure/database/storage/product_db"
 
 export interface ProductRepositoryInterface {
     addProduct(product: Product): Promise<void>
@@ -27,5 +27,3 @@ export class ProductRepository implements ProductRepositoryInterface {
         return await this.productRepo.updateProduct(id, product)
     }
 }
-
-export const productRepository = new ProductRepository(productDBInstance)

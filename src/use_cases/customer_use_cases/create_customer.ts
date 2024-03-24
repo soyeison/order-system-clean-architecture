@@ -1,9 +1,13 @@
 import { Customer } from "../../entities/Customer";
-import { customerRepository } from "../../repositories/customer/customer_repository";
+import { CustomerRepository } from "../../repositories/customer/customer_repository";
 import { CreateCustomerInput, CreateCustomerOutput, CreateCustomerUseCase } from '../../interfaces/use_cases/customer_use_cases/create_customer';
 import { UUIDGenerator } from '../../infrastructure/utils/uuid_generator';
 
 export class CreateCustomerImpl implements CreateCustomerUseCase {
+    constructor(
+        private readonly customerRepositoryRepo: CustomerRepository 
+    ) {}
+
     async execute(input: CreateCustomerInput): Promise<CreateCustomerOutput> {
         if (!this.isCustomerOver18(input.contactInfo.dateOfBirth)) {
             throw new Error('El cliente debe tener al menos 18 años para registrarse');
@@ -11,7 +15,7 @@ export class CreateCustomerImpl implements CreateCustomerUseCase {
         const customer = await this.createCustomer(input)
 
         // Guardar este customer en memoria
-        customerRepository.addCustomer(customer)
+        await this.customerRepositoryRepo.addCustomer(customer)
 
         return {
             customer

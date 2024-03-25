@@ -14,7 +14,7 @@ export class GetOneCustomerImpl implements GetOneCustomerUseCase {
         }
     }
 
-    async getOneCustomer(id: string) {
+    private async getOneCustomer(id: string) {
         const customer = await this.customerRepositoryRepo.getOneCustomer(id)
 
         if (!customer) {

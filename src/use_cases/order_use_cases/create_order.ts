@@ -1,18 +1,8 @@
 import { Customer } from "../../entities/Customer";
 import { Order, OrderStatus } from "../../entities/Order";
 import { Product } from "../../entities/Product";
-import { BaseUseCase } from "../../interfaces/use_cases/use_case.interface";
-
-export interface CreateOrderInput {
-    products: Product[]
-    customer: Customer
-}
-
-export interface CreateOrderOutput {
-    order: Order
-}
-
-export interface CreateOrderUseCase extends BaseUseCase<CreateOrderInput, CreateOrderOutput> {}
+import { UUIDGenerator } from "../../infrastructure/utils/uuid_generator";
+import { CreateOrderInput, CreateOrderOutput, CreateOrderUseCase } from "../../interfaces/use_cases/order_use_cases/create_order";
 
 export class CreateOrderImpl implements CreateOrderUseCase {
     async execute(input: CreateOrderInput): Promise<CreateOrderOutput> {
@@ -25,15 +15,19 @@ export class CreateOrderImpl implements CreateOrderUseCase {
 
     private async createOrder(products: Product[], customer: Customer): Promise<Order> {
         try {
-            // Calcular el total de la orden
-            const totalPrice = products.reduce((total, products) => total + products.price, 0)
-            const newOrder = new Order('', products, customer, totalPrice, OrderStatus.Pending, new Date)
+            const id = UUIDGenerator.generateUUID()
+            const totalPrice = this.getTotalPrice(products)
+            const newOrder = new Order(id, products, customer, totalPrice, OrderStatus.Pending, new Date)
 
             return newOrder
         } catch (error) {
             console.log(error)
             throw new Error('')
         }
+    }
+
+    private getTotalPrice(products: Product[]) {
+        return products.reduce((total, products) => total + products.price, 0)
     }
 }
 

@@ -14,7 +14,7 @@ export class GetOneProductImpl implements GetOneProductUseCase {
         }
     }
 
-    async getOneCustomer(id: string) {
+    private async getOneCustomer(id: string) {
         const product = await this.productRepositoryRepo.getOneProduct(id)
 
         if (!product) {

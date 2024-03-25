@@ -1,12 +1,6 @@
-import { Customer } from "../../entities/Customer"
-import { CustomerDB } from "../../infrastructure/database/storage/customer_db"
-
-export interface CustomerRepositoryInterface {
-    addCustomer(customer: Customer): Promise<void>
-    getCustomers(): Promise<Customer[]>
-    getOneCustomer(id: string): Promise<Customer | undefined>
-    updateCustomer(id: string, customer: Customer): Promise<Customer>
-}
+import { Customer } from "../../../entities/Customer"
+import { CustomerRepositoryInterface } from "../../../interfaces/repositories/customer_repository.interface"
+import { CustomerDB } from "../../database/storage/customer_db"
 
 export class CustomerRepository implements CustomerRepositoryInterface {
     constructor(private readonly customerRepo: CustomerDB ) {}

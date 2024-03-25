@@ -1,11 +1,11 @@
 import { Product } from '../../entities/Product';
 import { CreateProductInput, CreateProductOutput, CreateProductUseCase } from '../../interfaces/use_cases/product_use_cases/create_product';
 import { UUIDGenerator } from '../../infrastructure/utils/uuid_generator';
-import { ProductRepository } from '../../repositories/product/product_repository';
+import { ProductRepositoryInterface } from '../../interfaces/repositories/product_repository.interface';
 
 export class CreateProductImpl implements CreateProductUseCase {
     constructor(
-        private readonly productRepositoryRepo: ProductRepository 
+        private readonly productRepositoryRepo: ProductRepositoryInterface
     ) {}
 
     async execute(input: CreateProductInput): Promise<CreateProductOutput> {

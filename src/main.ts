@@ -1,6 +1,6 @@
 import { CustomerDB } from "./infrastructure/database/storage/customer_db";
+import { CustomerRepository } from "./infrastructure/repositories/customer/customer_repository";
 import { CreateCustomerInput } from "./interfaces/use_cases/customer_use_cases/create_customer";
-import { CustomerRepository } from "./repositories/customer/customer_repository";
 import { CreateCustomerImpl } from "./use_cases/customer_use_cases/create_customer";
 
 (async () => {

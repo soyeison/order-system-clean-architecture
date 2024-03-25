@@ -1,11 +1,12 @@
 import { Customer } from "../../entities/Customer";
-import { CustomerRepository } from "../../repositories/customer/customer_repository";
 import { CreateCustomerInput, CreateCustomerOutput, CreateCustomerUseCase } from '../../interfaces/use_cases/customer_use_cases/create_customer';
 import { UUIDGenerator } from '../../infrastructure/utils/uuid_generator';
+import { CustomerRepositoryInterface } from "../../interfaces/repositories/customer_repository.interface";
 
 export class CreateCustomerImpl implements CreateCustomerUseCase {
     constructor(
-        private readonly customerRepositoryRepo: CustomerRepository 
+        // Debo traerme las interfaces y no las implementaciones para que sea agnostico de la implementacion como tal
+        private readonly customerRepositoryRepo: CustomerRepositoryInterface
     ) {}
 
     async execute(input: CreateCustomerInput): Promise<CreateCustomerOutput> {

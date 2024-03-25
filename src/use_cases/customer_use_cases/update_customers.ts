@@ -1,9 +1,9 @@
+import { CustomerRepositoryInterface } from "../../interfaces/repositories/customer_repository.interface";
 import { UpdateCustomerInput, UpdateCustomerOutput, UpdateCustomerUseCase } from "../../interfaces/use_cases/customer_use_cases/update_customer";
-import { CustomerRepository } from "../../repositories/customer/customer_repository";
 
 export class UpdateCustomerImpl implements UpdateCustomerUseCase {
     constructor(
-        private readonly customerRepositoryRepo: CustomerRepository
+        private readonly customerRepositoryRepo: CustomerRepositoryInterface
     ) {}
 
     async execute(input: UpdateCustomerInput): Promise<UpdateCustomerOutput> {

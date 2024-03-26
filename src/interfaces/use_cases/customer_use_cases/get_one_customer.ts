@@ -2,7 +2,7 @@ import { Customer } from "../../../entities/Customer"
 import { BaseUseCase } from "../use_case.interface"
 
 export interface GetOneCustomerInput {
-    id: string
+    customerId: string
 }
 
 export interface GetOneCustomerOutput {

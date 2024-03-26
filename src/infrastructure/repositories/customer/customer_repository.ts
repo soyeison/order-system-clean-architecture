@@ -3,7 +3,7 @@ import { CustomerRepositoryInterface } from "../../../interfaces/repositories/cu
 import { CustomerDB } from "../../database/storage/customer_db"
 
 export class CustomerRepository implements CustomerRepositoryInterface {
-    constructor(private readonly customerRepo: CustomerDB ) {}
+    constructor(private readonly customerRepo: CustomerDB) {}
 
     async addCustomer(customer: Customer): Promise<void> {
         await this.customerRepo.addCustomer(customer)

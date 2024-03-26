@@ -7,7 +7,7 @@ export class GetOneCustomerImpl implements GetOneCustomerUseCase {
     ) {}
 
     async execute(input: GetOneCustomerInput): Promise<GetOneCustomerOutput> {
-        const customer = await this.getOneCustomer(input.id)
+        const customer = await this.getOneCustomer(input.customerId)
 
         return {
             customer

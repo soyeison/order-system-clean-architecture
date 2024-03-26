@@ -7,14 +7,14 @@ export class UpdateCustomerImpl implements UpdateCustomerUseCase {
     ) {}
 
     async execute(input: UpdateCustomerInput): Promise<UpdateCustomerOutput> {
-        const customer = await this.customerRepositoryRepo.getOneCustomer(input.id)
+        const customer = await this.customerRepositoryRepo.getOneCustomer(input.customerId)
 
         if (!customer) {
             throw new Error('Cliente no encontrado')
         }
         const updatedCustomer = {...customer, ...input.changes}
 
-        await this.customerRepositoryRepo.updateCustomer(input.id, updatedCustomer)
+        await this.customerRepositoryRepo.updateCustomer(input.customerId, updatedCustomer)
 
         return {
             updatedCustomer

@@ -2,7 +2,7 @@ import { Customer } from "../../../entities/Customer";
 import { BaseUseCase } from "../use_case.interface";
 
 export interface UpdateCustomerInput {
-    id: string;
+    customerId: string;
     changes: Partial<Customer>
 }
 

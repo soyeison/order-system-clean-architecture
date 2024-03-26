@@ -2,12 +2,18 @@ import { Customer } from "../../entities/Customer";
 import { Order, OrderStatus } from "../../entities/Order";
 import { Product } from "../../entities/Product";
 import { UUIDGenerator } from "../../infrastructure/utils/uuid_generator";
+import { OrderRepositoryInterface } from "../../interfaces/repositories/order_repository.interface";
 import { CreateOrderInput, CreateOrderOutput, CreateOrderUseCase } from "../../interfaces/use_cases/order_use_cases/create_order";
 
 export class CreateOrderImpl implements CreateOrderUseCase {
+    constructor(private readonly orderRepositoryRepo: OrderRepositoryInterface) {}
+
     async execute(input: CreateOrderInput): Promise<CreateOrderOutput> {
         // Logica para crear una orden
         const order = await this.createOrder(input.products, input.customer)
+
+        await this.orderRepositoryRepo.addOrder(order)
+        
         return {
             order
         }

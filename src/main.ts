@@ -2,17 +2,20 @@ import { OrderStatus } from "./entities/Order";
 import { CustomerDB } from "./infrastructure/database/storage/customer_db";
 import { OrderDB } from "./infrastructure/database/storage/order_db";
 import { ProductDB } from "./infrastructure/database/storage/product_db";
+import { WompiPaymentService } from "./infrastructure/payment/wompi_payment_service";
 import { CustomerRepository } from "./infrastructure/repositories/customer/customer_repository";
 import { OrderRepository } from "./infrastructure/repositories/order/order_repository";
 import { ProductRepository } from "./infrastructure/repositories/product/product_repository";
 import { CreateCustomerInput } from "./interfaces/use_cases/customer_use_cases/create_customer";
 import { CreateOrderInput } from "./interfaces/use_cases/order_use_cases/create_order";
 import { UpdateOrderStatusInput } from "./interfaces/use_cases/order_use_cases/update_order_status";
+import { MakePaymentInput } from "./interfaces/use_cases/payment_use_cases/create_payment";
 import { CreateProductInput } from "./interfaces/use_cases/product_use_cases/create_product";
 import { CreateCustomerImpl } from "./use_cases/customer_use_cases/create_customer";
 import { CreateOrderImpl } from "./use_cases/order_use_cases/create_order";
 import { UpdateOrderStatusImpl } from "./use_cases/order_use_cases/update_order_status";
 import { transitionStrategies } from "./use_cases/order_use_cases/update_order_status/state_transition_strategy_map";
+import { MakePaymentImpl } from "./use_cases/payment_use_cases/make_payment";
 import { CreateProductImpl } from "./use_cases/product_use_cases/create_product";
 
 (async () => {
@@ -62,14 +65,21 @@ import { CreateProductImpl } from "./use_cases/product_use_cases/create_product"
     const orderCreated = await createOrderUsecasesInstance.execute(orderInformation)
     console.log(orderCreated)
 
-    // Pasar la orden a confirmada
+    // Pasar la orden a confirmada realizando el pago
     const updateOrderStatusUsecasesInstance = new UpdateOrderStatusImpl(orderRepositoryInstance, transitionStrategies)
+    const wompiServiceInstance = new WompiPaymentService('')
+    const generatePaymentUsecaseInstance = new MakePaymentImpl(wompiServiceInstance, orderRepositoryInstance, updateOrderStatusUsecasesInstance)
 
-    const orderUpdateInformation: UpdateOrderStatusInput = {
+    const generatePaymentInformation: MakePaymentInput = {
         orderId: orderCreated.order.id,
-        newStatus: OrderStatus.Confirmed
+        paymentDetails: {
+            type: 'Tarjeta de crédito',
+            cardNumber: '999999999',
+            expirationDate: new Date('2024/07/01')
+        }
     }
+    await generatePaymentUsecaseInstance.execute(generatePaymentInformation)
 
-    const orderUpdated = await updateOrderStatusUsecasesInstance.execute(orderUpdateInformation)
-    console.log(orderUpdated)
+    // Revisamos en que estado se encuentra la orden
+    console.log(await orderDBInstance.getOneOrder(orderCreated.order.id))
 })()

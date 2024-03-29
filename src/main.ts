@@ -1,17 +1,20 @@
-import { OrderStatus } from "./entities/Order";
-import { CustomerDB } from "./infrastructure/database/storage/customer_db";
-import { OrderDB } from "./infrastructure/database/storage/order_db";
-import { ProductDB } from "./infrastructure/database/storage/product_db";
+
+import { CustomerDB } from "./infrastructure/database/memory/storage/customer_db";
+import { OrderDB } from "./infrastructure/database/memory/storage/order_db";
+import { ProductDB } from "./infrastructure/database/memory/storage/product_db";
+import sequelizeConnection from "./infrastructure/database/sequelize/config";
+import dbInit from "./infrastructure/database/sequelize/init";
 import { WompiPaymentService } from "./infrastructure/payment/wompi_payment_service";
-import { CustomerRepository } from "./infrastructure/repositories/customer/customer_repository";
-import { OrderRepository } from "./infrastructure/repositories/order/order_repository";
-import { ProductRepository } from "./infrastructure/repositories/product/product_repository";
+import { CustomerRepository } from "./infrastructure/repositories/sqlite/customer/customer_repository";
+import { OrderRepository } from "./infrastructure/repositories/sqlite/order/order_repository";
+import { ProductRepository } from "./infrastructure/repositories/sqlite/product/product_repository";
 import { CreateCustomerInput } from "./interfaces/use_cases/customer_use_cases/create_customer";
 import { CreateOrderInput } from "./interfaces/use_cases/order_use_cases/create_order";
-import { UpdateOrderStatusInput } from "./interfaces/use_cases/order_use_cases/update_order_status";
 import { MakePaymentInput } from "./interfaces/use_cases/payment_use_cases/create_payment";
 import { CreateProductInput } from "./interfaces/use_cases/product_use_cases/create_product";
 import { CreateCustomerImpl } from "./use_cases/customer_use_cases/create_customer";
+import { GetAllCustomersImpl } from "./use_cases/customer_use_cases/get_all_customers";
+import { GetOneCustomerImpl } from "./use_cases/customer_use_cases/get_one_customer";
 import { CreateOrderImpl } from "./use_cases/order_use_cases/create_order";
 import { UpdateOrderStatusImpl } from "./use_cases/order_use_cases/update_order_status";
 import { transitionStrategies } from "./use_cases/order_use_cases/update_order_status/state_transition_strategy_map";
@@ -19,13 +22,19 @@ import { MakePaymentImpl } from "./use_cases/payment_use_cases/make_payment";
 import { CreateProductImpl } from "./use_cases/product_use_cases/create_product";
 
 (async () => {
-    // Iniciar los modelos de la persistencia de datos
-    const customerDBInstance = new CustomerDB()
+    // Iniciar los modelos de la persistencia de datos en memoria
+    /* const customerDBInstance = new CustomerDB()
     const productDBInstance = new ProductDB()
     const orderDBInstance = new OrderDB()
     const customerRepositoryIntance = new CustomerRepository(customerDBInstance)
     const productRepositoryInstance = new ProductRepository(productDBInstance)
-    const orderRepositoryInstance = new OrderRepository(orderDBInstance)
+    const orderRepositoryInstance = new OrderRepository(orderDBInstance) */
+
+    // Iniciar los modelos de la persistencia de datos en memoria
+    await dbInit()
+    const customerRepositoryIntance = new CustomerRepository(sequelizeConnection)
+    const productRepositoryInstance = new ProductRepository(sequelizeConnection)
+    const orderRepositoryInstance = new OrderRepository(sequelizeConnection, customerRepositoryIntance)
 
     // Crear un producto
     const createProductUsecasesInstance = new CreateProductImpl(productRepositoryInstance)
@@ -81,5 +90,5 @@ import { CreateProductImpl } from "./use_cases/product_use_cases/create_product"
     await generatePaymentUsecaseInstance.execute(generatePaymentInformation)
 
     // Revisamos en que estado se encuentra la orden
-    console.log(await orderDBInstance.getOneOrder(orderCreated.order.id))
+    console.log(await orderRepositoryInstance.getOneOrder(orderCreated.order.id))
 })()

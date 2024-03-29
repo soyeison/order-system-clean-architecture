@@ -16,7 +16,11 @@
     "typescript": "^5.4.3"
   },
   "dependencies": {
+    "@types/node": "^20.11.30",
     "express": "^4.19.1",
+    "sequelize": "^6.37.1",
+    "sequelize-typescript": "^2.1.6",
+    "sqlite3": "^5.1.7",
     "uuid": "^9.0.1"
   }
 }

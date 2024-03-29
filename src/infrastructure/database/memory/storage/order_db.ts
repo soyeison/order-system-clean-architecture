@@ -1,4 +1,5 @@
-import { Order } from "../../../entities/Order";
+
+import { Order } from "../../../../entities/Order";
 import { OrderDBInterface } from "../interfaces/order_db.interface";
 
 export class OrderDB implements OrderDBInterface {

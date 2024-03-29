@@ -1,4 +1,5 @@
-import { Order } from "../../../entities/Order"
+import { Order } from "../../../../entities/Order"
+
 
 export interface OrderDBInterface {
     addOrder(order: Order): Promise<void>

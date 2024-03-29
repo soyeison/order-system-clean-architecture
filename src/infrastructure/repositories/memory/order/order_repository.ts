@@ -1,6 +1,8 @@
-import { Order } from "../../../entities/Order";
-import { OrderRepositoryInterface } from "../../../interfaces/repositories/order_repository.interface";
-import { OrderDB } from "../../database/storage/order_db";
+import { Order } from "../../../../entities/Order"
+import { OrderRepositoryInterface } from "../../../../interfaces/repositories/order_repository.interface"
+import { OrderDB } from "../../../database/memory/storage/order_db"
+
+
 
 export class OrderRepository implements OrderRepositoryInterface {
     constructor(private readonly orderRepo: OrderDB) {}

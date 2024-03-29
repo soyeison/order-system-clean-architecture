@@ -1,6 +1,7 @@
-import { Customer } from "../../../entities/Customer"
-import { CustomerRepositoryInterface } from "../../../interfaces/repositories/customer_repository.interface"
-import { CustomerDB } from "../../database/storage/customer_db"
+import { Customer } from "../../../../entities/Customer"
+import { CustomerRepositoryInterface } from "../../../../interfaces/repositories/customer_repository.interface"
+import { CustomerDB } from "../../../database/memory/storage/customer_db"
+
 
 export class CustomerRepository implements CustomerRepositoryInterface {
     constructor(private readonly customerRepo: CustomerDB) {}

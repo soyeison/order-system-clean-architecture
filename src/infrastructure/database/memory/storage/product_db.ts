@@ -1,6 +1,4 @@
-import { Customer } from "../../../entities/Customer"
-import { Product } from "../../../entities/Product"
-import { CustomerDBInterface } from "../interfaces/customer_db.interface"
+import { Product } from "../../../../entities/Product"
 import { ProductDBInterface } from "../interfaces/product_db.interface"
 
 export class ProductDB implements ProductDBInterface {

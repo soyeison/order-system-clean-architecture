@@ -1,4 +1,5 @@
-import { Customer } from "../../../entities/Customer"
+
+import { Customer } from "../../../../entities/Customer"
 import { CustomerDBInterface } from "../interfaces/customer_db.interface"
 
 export class CustomerDB implements CustomerDBInterface {

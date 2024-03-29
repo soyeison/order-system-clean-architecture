@@ -1,9 +1,10 @@
-import { Product } from "../../../entities/Product"
-import { ProductRepositoryInterface } from "../../../interfaces/repositories/product_repository.interface"
-import { ProductDB } from "../../database/storage/product_db"
+import { Product } from "../../../../entities/Product"
+import { ProductRepositoryInterface } from "../../../../interfaces/repositories/product_repository.interface"
+import { ProductDB } from "../../../database/memory/storage/product_db"
+
 
 export class ProductRepository implements ProductRepositoryInterface {
-    constructor(private readonly productRepo: ProductDB ) {}
+    constructor(private readonly productRepo: ProductDB) {}
 
     async addProduct(product: Product): Promise<void> {
         await this.productRepo.addProduct(product)
